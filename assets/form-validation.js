@@ -9,7 +9,7 @@
       //e.preventDefault();
 
       if (checkRegex()) {
-        navigator.clipboard.writeText($('#preview').val())
+        navigator.clipboard.writeText($('#preview').val());
       }
 
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -124,7 +124,7 @@ function pickEasterEgg() {
     'Get your stinking changelist off me, you damned dirty ape.',
     'Carpe diem. Seize the day. Make your lives extraordinary.',
     'Nobody puts the Build in a corner.',
-    'If you\'re reading this, you\'ve been in a coma for almost 20 years now.<br>We\'re trying a new technique. We don\'t know where this message will end up in your dream, but we hope it works.<br>Please wake up, we miss you.'
+    'If you\'re reading this, you\'ve been in a coma for almost 20 years now. We\'re trying a new technique.<br>We don\'t know where this message will end up in your dream, but we hope it works.<br>Please wake up, we miss you.'
   ];
 
   const random = Math.floor(Math.random() * quotes.length);

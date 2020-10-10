@@ -6,9 +6,12 @@
 
     $('#generator').on("click", function (e) {
       //e.preventDefault();
-      var container = $('#preview');
-      container.select();
-      document.execCommand("copy");
+
+      if (checkRegex()) {
+        var container = $('#preview');
+        container.select();
+        document.execCommand("copy");
+      }
 
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
       var forms = document.getElementsByClassName('needs-validation');
@@ -62,7 +65,9 @@ function togglePublicDescription() {
 }
 
 function updateResult() {
-  var text = $('#type').val() + ' ';
+  var clType = $('#type').val();
+  var text = clType.substring(0, 3).toUpperCase() + ' ';
+  console.log(clType.substring(0, 3).toUpperCase());
 
   var jiraId = $('#jira').val();
   if (jiraId) {
@@ -94,11 +99,15 @@ function updateResult() {
   }
 
   var container = $('#preview');
+  container.val(text);
+}
 
+function checkRegex() {
   const regex = /([A-Z]{3}) (([A-Z]{3,5}-[0-9]+) )*(!P\[(.+?)\]\[.+\]|!X\[(.+?)\])/g;
-  if (text.match(regex)) {
-    container.val(text);
-  } else {
-    container.val("Invalid changelist");
+
+  if (!$('#preview').val().match(regex)) {
+    //$('#preview').val("Invalid changelist");
   }
+
+  return $('#preview').val().match(regex);
 }

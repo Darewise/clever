@@ -27,27 +27,6 @@
   }, false)
 }())
 
-function copyToClipboard(text) {
-  // This is not supported by Firefox!
-  if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-    navigator.clipboard.writeText(text);
-  } else {
-    var dummy = document.createElement("textarea");
-    // to avoid breaking orgain page when copying more words
-    // cant copy when adding below this code
-    // dummy.style.display = 'none'
-    document.body.appendChild(dummy);
-    //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
-    dummy.value = text;
-    dummy.select();
-    document.execCommand("copy");
-    document.body.removeChild(dummy);
-  }
-
-  //navigator.clipboard.writeText(text);
-  return false;
-}
-
 function togglePublicDescription() {
   if ($('#visibility').val().toLowerCase() === "public") {
     $('#public-description-group').show();

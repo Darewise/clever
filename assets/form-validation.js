@@ -3,7 +3,6 @@
   'use strict'
 
   window.addEventListener('load', function () {
-
     pickEasterEgg();
 
     $('#generator').on("click", function (e) {
@@ -45,16 +44,23 @@
 }())
 
 function copyToClipboard(text) {
-  var dummy = document.createElement("textarea");
-  // to avoid breaking orgain page when copying more words
-  // cant copy when adding below this code
-  // dummy.style.display = 'none'
-  document.body.appendChild(dummy);
-  //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
-  dummy.value = text;
-  dummy.select();
-  document.execCommand("copy");
-  document.body.removeChild(dummy);
+  // This is not supported by Firefox!
+  /* if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+    navigator.clipboard.writeText(text);
+  } else {
+    var dummy = document.createElement("textarea");
+    // to avoid breaking orgain page when copying more words
+    // cant copy when adding below this code
+    // dummy.style.display = 'none'
+    document.body.appendChild(dummy);
+    //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
+    dummy.value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+  } */
+
+  navigator.clipboard.writeText(text);
   return false;
 }
 
@@ -100,8 +106,7 @@ function updateResult() {
     text += ' ' + privateDescription;
   }
 
-  var container = $('#preview');
-  container.val(text);
+  $('#preview').val(text);
 }
 
 function checkRegex() {
@@ -119,7 +124,7 @@ function pickEasterEgg() {
     'Game dev... game dev never changes.',
     'The Build is a lie.',
     'Be wise. Be safe. Be aware.',
-    'Don\'t make a PM a promise if you know you can’t keep it.',
+    'Don\'t make your PM a promise if you know you can\'t keep it.',
     'A journey of a thousand miles begins with a single step. So just take it step by step.',
     'No matter how red the build, the green always comes.',
     'If all else fails, use fire.',
@@ -137,10 +142,12 @@ function pickEasterEgg() {
     'Are you a bad enough dude to fix the build?',
     'You\'ve met with a terrible fate, haven’t you?',
     'Did I ever tell you the definition of insanity?',
-    'Waka Waka Waka',
+    'Waka-waka-waka',
     'You require more vespene gas.',
-    '*Fixes the build late* Kept you waiting, huh?',
+    '*Fixes the build 3 days later* Kept you waiting, huh?',
     'Go ahead, make my day.',
+    'Mein Führer! I can walk!',
+    'A crash a day keeps the release away.',
     'May the Force be with you.',
     'You talking to me?',
     'I love the smell of broken builds in the morning.',

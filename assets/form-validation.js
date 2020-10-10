@@ -4,6 +4,8 @@
 
   window.addEventListener('load', function () {
 
+    pickEasterEgg();
+
     $('#generator').on("click", function (e) {
       //e.preventDefault();
 
@@ -105,9 +107,56 @@ function updateResult() {
 function checkRegex() {
   const regex = /([A-Z]{3}) (([A-Z]{3,5}-[0-9]+) )*(!P\[(.+?)\]\[.+\]|!X\[(.+?)\])/g;
 
-  if (!$('#preview').val().match(regex)) {
-    //$('#preview').val("Invalid changelist");
-  }
+  /*if (!$('#preview').val().match(regex)) {
+    $('#preview').val("Invalid changelist");
+  }*/
 
   return $('#preview').val().match(regex);
+}
+
+function pickEasterEgg() {
+  const quotes = [
+    'Game dev... game dev never changes.',
+    'The Build is a lie.',
+    'Be wise. Be safe. Be aware.',
+    'Don\'t make a PM a promise if you know you can’t keep it.',
+    'A journey of a thousand miles begins with a single step. So just take it step by step.',
+    'No matter how red the build, the green always comes.',
+    'If all else fails, use fire.',
+    'Remember to use nutrients to replenish your health.',
+    'I\'m Commander Shepard, and this is my favorite changelist on the Citadel!',
+    'It\'s time to fix the build and chew bubble gum... and I\'m all outta gum.',
+    'Would you kindly not break the build?',
+    'Praise the sun! \\o/',
+    'Hey! Look! Listen!',
+    'Do a barrel roll!',
+    'Build? Build? BUUIIIIILD!',
+    'Thank you, Mario! But our fix is in another changelist!',
+    'You have died of dysentery.',
+    'I never asked for this.',
+    'Are you a bad enough dude to fix the build?',
+    'You\'ve met with a terrible fate, haven’t you?',
+    'Did I ever tell you the definition of insanity?',
+    'Waka Waka Waka',
+    'You require more vespene gas.',
+    '*Fixes the build late* Kept you waiting, huh?',
+    'Go ahead, make my day.',
+    'May the Force be with you.',
+    'You talking to me?',
+    'I love the smell of broken builds in the morning.',
+    'We\'re gonna need a bigger server.',
+    'Mama always said gamedev bugs were like a box of chocolates. You never know what you\'re gonna get.',
+    'I see broken builds.',
+    'You\'ve got to ask yourself one question: \"Do I feel lucky?\". Well, do ya, punk?',
+    'Keep your teammates close, but your PMs closer.',
+    'Say "hello" to my little friend! *breaks the build*',
+    'Gentlemen, you can\'t fight in here! This is the War Room!',
+    'Get your stinking changelist off me, you damned dirty ape.',
+    'Carpe diem. Seize the day. Make your lives extraordinary.',
+    'Nobody puts the Build in a corner.',
+    'If you\'re reading this, you\'ve been in a coma for almost 20 years now.<br>We\'re trying a new technique. We don\'t know where this message will end up in your dream, but we hope it works.<br>Please wake up, we miss you.'
+  ];
+
+  const random = Math.floor(Math.random() * quotes.length);
+  $('#easter-egg').append('<p> « ' + quotes[random] + ' »</p>');
 }

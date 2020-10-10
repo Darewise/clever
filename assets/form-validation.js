@@ -53,6 +53,14 @@ function copyToClipboard(text) {
   return false;
 }
 
+function togglePublicDescription() {
+  if ($('#visibility').val().toLowerCase() === "public") {
+    $('#public-description-group').show();
+  } else {
+    $('#public-description-group').hide();
+  }
+}
+
 function updateResult() {
   var text = $('#type').val() + ' ';
 
@@ -62,7 +70,9 @@ function updateResult() {
   }
 
   var visibility = $('#visibility').val();
-  if (visibility.toLowerCase() === "public") {
+  var isPublic = visibility.toLowerCase() === "public";
+
+  if (isPublic) {
     text += '!P';
   } else if (visibility.toLowerCase() === "private") {
     text += '!X';
@@ -73,8 +83,10 @@ function updateResult() {
     text += '[' + category + ']';
   }
 
-  var publicDescription = $('#public-description').val();
-  text += '[' + publicDescription + ']';
+  if (isPublic) {
+    var publicDescription = $('#public-description').val();
+    text += '[' + publicDescription + ']';
+  }
 
   var privateDescription = $('#private-description').val();
   if (privateDescription) {
@@ -82,5 +94,11 @@ function updateResult() {
   }
 
   var container = $('#preview');
-  container.val(text);
+
+  const regex = /([A-Z]{3}) (([A-Z]{3,5}-[0-9]+) )*(!P\[(.+?)\]\[.+\]|!X\[(.+?)\])/g;
+  if (text.match(regex)) {
+    container.val(text);
+  } else {
+    container.val("Invalid changelist");
+  }
 }

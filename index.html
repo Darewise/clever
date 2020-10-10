@@ -7,6 +7,7 @@
   <meta name="description" content="Tool to easily generate changelist messages for your commits.">
   <meta name="author" content="Christian Chomiak and Bootstrap contributors">
   <meta name="generator" content="Jekyll v4.1.1">
+  <link rel="icon" type="image/png" href="favicon.png">
   <title>CLever</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/checkout/">
@@ -55,25 +56,11 @@
         <h4 class="mb-3">Changelist Info</h4>
         <form class="needs-validation" novalidate>
 
-          <div class="mb-3">
-            <label for="public-description">Release Note</label>
-            <input type="text" class="form-control" id="public-description"
-              placeholder="Information relevant to the players" required>
-            <div class="invalid-feedback">
-              Please leave a non-empty message using only ASCII characters.
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="private-description">Dev Description <span class="text-muted">(Optional)</span></label>
-            <input type="text" class="form-control" id="private-description"
-              placeholder="Information relevant to the dev team">
-          </div>
-
           <div class="row">
             <div class="col-md-3 mb-3">
-              <label for="visibility">Visibility</label>
-              <select class="custom-select d-block w-100" id="visibility" required onchange="updateResult()">
+              <label for="visibility"><b class="font-weight-bold">Visibility</b></label>
+              <select class="custom-select d-block w-100" id="visibility" required
+                onchange="updateResult();togglePublicDescription()">
                 <option value="">Choose...</option>
                 <option>Public</option>
                 <option>Private</option>
@@ -83,7 +70,7 @@
               </div>
             </div>
             <div class="col-md-3 mb-3">
-              <label for="type">Type</label>
+              <label for="type"><b class="font-weight-bold">Type</b></label>
               <select class="custom-select d-block w-100" id="type" required onchange="updateResult()">
                 <option value="">Choose...</option>
                 <option>ADD</option>
@@ -99,7 +86,7 @@
               </div>
             </div>
             <div class="col-md-3 mb-3">
-              <label for="category">Category</label>
+              <label for="category"><b class="font-weight-bold">Category</b></label>
               <select class="custom-select d-block w-100" id="category" required onchange="updateResult()">
                 <option value="">Choose...</option>
                 <option>Art</option>
@@ -129,7 +116,8 @@
               </div>
             </div>
             <div class="col-md-3 mb-3">
-              <label for="jira">JIRA Ticket <span class="text-muted">(Optional)</span></label>
+              <label for="jira"><b class="font-weight-bold">JIRA Ticket </b><span
+                  class="text-muted">(Optional)</span></label>
               <input type="text" class="form-control" id="jira" placeholder="ex: COV-1234">
               <div class="invalid-feedback">
                 Invalid JIRA ticket ID.
@@ -138,10 +126,26 @@
 
           </div>
 
+          <div class="mb-3" id="public-description-group">
+            <label for="public-description"><b class="font-weight-bold">Release Note</b></label>
+            <input type="text" class="form-control" id="public-description"
+              placeholder="Information relevant to the players" required>
+            <div class="invalid-feedback">
+              Please leave a non-empty message using only ASCII characters.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="private-description"><b class="font-weight-bold">Dev Description </b><span
+                class="text-muted">(Optional)</span></label>
+            <input type="text" class="form-control" id="private-description"
+              placeholder="Information relevant to the dev team">
+          </div>
+
           <hr class="mb-4">
 
           <div class="mb-3">
-            <label for="preview">Changelist Preview</label>
+            <label for="preview"><b class="font-weight-bold">Changelist Preview</b></label>
             <input type="text" class="form-control" id="preview"
               placeholder="Fill the values above and then click down below!" readonly>
           </div>

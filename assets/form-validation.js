@@ -69,7 +69,8 @@ function updateResult() {
     text += ' ' + privateDescription;
   }
 
-  $('#preview').val(text);
+  // The changelog generator doesn't support Unicode characters.
+  $('#preview').val(text.replace(/[^\x00-\x7F]/g, ""));
 }
 
 function checkRegex() {

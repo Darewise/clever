@@ -9,9 +9,7 @@
       //e.preventDefault();
 
       if (checkRegex()) {
-        var container = $('#preview');
-        container.select();
-        document.execCommand("copy");
+        navigator.clipboard.writeText($('#preview').val())
       }
 
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -26,26 +24,12 @@
         form.classList.add('was-validated')
       });
     });
-
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    /*var forms = document.getElementsByClassName('needs-validation')
-
-    // Loop over them and prevent submission
-    Array.prototype.filter.call(forms, function (form) {
-      form.addEventListener('submit', function (event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-        form.classList.add('was-validated')
-      }, false)
-    })*/
   }, false)
 }())
 
 function copyToClipboard(text) {
   // This is not supported by Firefox!
-  /* if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+  if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
     navigator.clipboard.writeText(text);
   } else {
     var dummy = document.createElement("textarea");
@@ -58,9 +42,9 @@ function copyToClipboard(text) {
     dummy.select();
     document.execCommand("copy");
     document.body.removeChild(dummy);
-  } */
+  }
 
-  navigator.clipboard.writeText(text);
+  //navigator.clipboard.writeText(text);
   return false;
 }
 
@@ -110,12 +94,11 @@ function updateResult() {
 }
 
 function checkRegex() {
-  const regex = /([A-Z]{3}) (([A-Z]{3,5}-[0-9]+) )*(!P\[(.+?)\]\[.+\]|!X\[(.+?)\])/g;
-
   /*if (!$('#preview').val().match(regex)) {
     $('#preview').val("Invalid changelist");
   }*/
 
+  const regex = /([A-Z]{3}) (([A-Z]{3,5}-[0-9]+) )*(!P\[(.+?)\]\[.+\]|!X\[(.+?)\])/g;
   return $('#preview').val().match(regex);
 }
 

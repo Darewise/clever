@@ -13,7 +13,7 @@
   <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/checkout/">
 
   <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
@@ -61,10 +61,14 @@
             <div class="col-md-3 mb-3">
               <label for="visibility"><b class="font-weight-bold">Visibility</b></label>
               <select class="custom-select d-block w-100" id="visibility" required
-                onchange="updateResult();togglePublicDescription()">
-                <option value="">Choose...</option>
-                <option>Public</option>
+                onchange="togglePublicMode(); updateResult()">
+                <!--
+                  We default to Private, since it's what most people will be using.
+                  If we ever want to default to none, add this:
+                    <option value="">Choose...</option>
+                -->
                 <option>Private</option>
+                <option>Public</option>
               </select>
               <div class="invalid-feedback">
                 Please provide a valid visibility.
@@ -119,7 +123,8 @@
             <div class="col-md-3 mb-3">
               <label for="jira"><b class="font-weight-bold">JIRA Ticket </b><span
                   class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="jira" placeholder="ex: COV-1234">
+              <input type="text" class="form-control" id="jira" placeholder="ex: COV-1234" contenteditable="true"
+                onpaste="handlePasteOnJira()">
               <div class="invalid-feedback">
                 Invalid JIRA ticket ID.
               </div>
@@ -127,28 +132,28 @@
 
           </div>
 
-          <div class="mb-3" id="public-description-group">
-            <label for="public-description"><b class="font-weight-bold">Release Note</b></label>
-            <input type="text" class="form-control" id="public-description"
+          <div class="mb-3">
+            <label for="main-description"><b class="font-weight-bold">Release Note</b></label>
+            <input type="text" class="form-control" id="main-description"
               placeholder="Information relevant to the players" required>
             <div class="invalid-feedback">
-              A release note is mandatory for public changes.
+              A release note is mandatory.
             </div>
           </div>
 
-          <div class="mb-3">
-            <label for="private-description"><b class="font-weight-bold">Additional Info </b><span
+          <div class="mb-3" id="optional-info-group">
+            <label for="optional-info"><b class="font-weight-bold">Additional Info </b><span
                 class="text-muted">(Optional)</span></label>
-            <input type="text" class="form-control" id="private-description"
-              placeholder="Information relevant to the development team">
+            <textarea type="text" class="form-control" id="optional-info"
+              placeholder="Information relevant to the development team" rows="2"></textarea>
           </div>
 
           <hr class="mb-4">
 
           <div class="mb-3">
             <label for="preview"><b class="font-weight-bold">Changelist Preview</b></label>
-            <input type="text" class="form-control" id="preview"
-              placeholder="Fill the values above and then click down below!" readonly>
+            <textarea type="text" class="form-control" id="preview"
+              placeholder="Fill the values above and then click down below!" readonly rows="4"></textarea>
           </div>
 
           <button class="btn btn-primary btn-lg btn-block" type="button" id="generator"
@@ -179,9 +184,7 @@
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
     crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="./assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"
-    integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf"
-    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
   <script src="./assets/form-validation.js"></script>
 
 </body>

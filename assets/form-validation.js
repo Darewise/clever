@@ -48,9 +48,9 @@ function presetDropdownFields() {
   $('#category').trigger('change');
 }
 
-function setCookie(cname, cvalue, exdays) {
+function setCookie(cname, cvalue, expirationInDays) {
   var d = new Date();
-  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  d.setTime(d.getTime() + (expirationInDays * 24 * 60 * 60 * 1000));
   var expires = "expires=" + d.toUTCString();
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
@@ -77,7 +77,7 @@ function isPublicChangelist() {
 
 function togglePublicMode() {
   if (isPublicChangelist()) {
-    $('#main-description').attr('placeholder', 'Information relevant to the players');
+    $('#main-description').attr('placeholder', 'Information relevant to the public');
     $('#optional-info').attr('placeholder', 'Information relevant to the development team');
   } else {
     $('#main-description').attr('placeholder', 'Information relevant to the development team');
@@ -111,7 +111,10 @@ function updateResult() {
   var clType = $('#type').val();
   document.cookie = setCookie("type", clType, cookiesLifetimeInDays);
 
-  var text = clType.substring(0, 3).toUpperCase() + ' ';
+  var text = '';
+  if (clType) {
+    text += clType.substring(0, 3).toUpperCase() + ' ';
+  }
 
   var jiraId = $('#jira').val();
   if (jiraId) {
@@ -155,10 +158,6 @@ function updateResult() {
 }
 
 function checkRegex() {
-  /*if (!$('#preview').val().match(regex)) {
-    $('#preview').val("Invalid changelist");
-  }*/
-
   const regex = /([A-Z]{3}) (([A-Z]{3,5}-[0-9]+) )*(!P\[(.+?)\]\[.+\]|!X\[(.+?)\])/g;
   return $('#preview').val().match(regex);
 }

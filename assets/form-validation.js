@@ -88,18 +88,19 @@ function togglePublicMode() {
 function handlePasteOnJira() {
   navigator.clipboard.readText().then(
     clipText => {
-      const urlRegex = /(https|http)\:\/\/darewise\.atlassian\.net\/browse\/([A-Z]{3,5}-[0-9]+)(.*)/;
+      const urlRegex = /(https|http)\:\/\/(.+)\.atlassian\.net\/browse\/([A-Z]{3,5}-[0-9]+)(.*)/;
 
       var jiraSplit = clipText.split(urlRegex);
 
       // Remove empty strings
       jiraSplit = jiraSplit.filter(item => item);
 
-      if (jiraSplit.length > 1) {
+      if (jiraSplit.length > 2) {
         // Given the regex we defined before, we'll end up with two groups.
         // The first one will contain "http" or "https".
-        // The second one will contain the string we're looking for.
-        $('#jira').val(jiraSplit[1]);
+        // The second one will contain the JIRA domain.
+        // The last one will contain the string we're looking for.
+        $('#jira').val(jiraSplit[2]);
       }
     }
   );

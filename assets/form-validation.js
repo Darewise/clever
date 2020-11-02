@@ -96,11 +96,13 @@ function handlePasteOnJira() {
       jiraSplit = jiraSplit.filter(item => item);
 
       if (jiraSplit.length > 2) {
-        // Given the regex we defined before, we'll end up with two groups.
+        // Given the regex we defined before, we'll end up with at least three groups.
         // The first one will contain "http" or "https".
         // The second one will contain the JIRA domain.
-        // The last one will contain the string we're looking for.
+        // The third one will contain the string we're looking for.
         $('#jira').val(jiraSplit[2]);
+      } else {
+        console.log("Failed to properly match the regex for the JIRA field. Groups are: " + jiraSplit);
       }
     }
   );

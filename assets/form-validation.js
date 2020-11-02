@@ -104,7 +104,6 @@ function handlePasteOnJira() {
       } else {
         console.log("Failed to properly match the regex for the JIRA field. Groups are: " + jiraSplit);
       }
-      console.log("Groups are: " + jiraSplit);
     }
   );
 }

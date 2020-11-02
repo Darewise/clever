@@ -44,7 +44,7 @@
 <body class="bg-light">
   <div class="container" onkeyup="updateResult()">
     <div class="py-5 text-center">
-      <!-- <img class="d-block mx-auto mb-4" src="./assets/img/your_logo.svg" alt="" width="192" height="64"> -->
+      <img class="d-block mx-auto mb-4" src="./assets/img/Darewise_logo.svg" alt="" width="192" height="64">
       <h2><b>CL</b>ever</h2>
       <p class="lead">A tool to generate properly formatted <b class="font-weight-bold">C</b>hange<b
           class="font-weight-bold">L</b>ist
@@ -79,12 +79,11 @@
               <select class="custom-select d-block w-100" id="type" required onchange="updateResult()">
                 <option value="">Choose...</option>
                 <option>Addition</option>
-                <option>Modification</option>
-                <option>Deletion</option>
+                <option>Improvement</option>
+                <option>Balancing</option>
+                <option>Deletion/Removal</option>
                 <option>Fix</option>
                 <option>Integration</option>
-                <option>Documentation</option>
-                <option>Maintenance</option>
                 <option>Refactor</option>
               </select>
               <div class="invalid-feedback">
@@ -95,15 +94,27 @@
               <label for="category"><b class="font-weight-bold">Category</b></label>
               <select class="custom-select d-block w-100" id="category" required onchange="updateResult()">
                 <option value="">Choose...</option>
+                <option>Art</option>
                 <option>Audio</option>
-                <option>Debugging</option>
-                <option>Engine</option>
-                <option>IO</option>
-                <option>Rendering</option>
-                <option>Scripting</option>
+                <option>Character</option>
+                <option>Contracts</option>
+                <option>Collection</option>
+                <option>Combat</option>
+                <option>Community</option>
+                <option>Construction</option>
+                <option>DevOps</option>
+                <option>Economy</option>
+                <option>Lore</option>
+                <option>Missions</option>
+                <option>Progression</option>
+                <option>Resources</option>
                 <option>Tech</option>
                 <option>Tools</option>
+                <option>Tutorial</option>
                 <option>UI</option>
+                <option>Vehicles</option>
+                <option>Wildlife</option>
+                <option>World</option>
               </select>
               <div class="invalid-feedback">
                 Please select a valid category.
@@ -124,7 +135,7 @@
           <div class="mb-3">
             <label for="main-description"><b class="font-weight-bold">Release Note</b></label>
             <input type="text" class="form-control" id="main-description"
-              placeholder="Information relevant to the public" required>
+              placeholder="Information relevant to the players" required>
             <div class="invalid-feedback">
               A release note is mandatory.
             </div>
@@ -158,12 +169,14 @@
     </div>
 
     <footer class="my-3 pt-3 text-muted text-center text-small">
-      <p class="mb-1">&copy; 2020 Christian Chomiak</p>
+      <p class="mb-1">&copy; 2020 Darewise Entertainment</p>
       <ul class="list-inline">
-        <li class="list-inline-item"><a href="https://github.com/christianchomiak/clever" target="_blank">About</a></li>
-        <!-- <li class="list-inline-item"><a
-            href="mailto:christianchomiak@gmail.com?subject=Issue%20with%20CLever">Support</a>
-        </li> -->
+        <li class="list-inline-item"><a
+            href="https://www.notion.so/darewise/Changelist-Syntax-4309a2dfe3994f8291239881197c8886"
+            target="_blank">About</a></li>
+        <li class="list-inline-item"><a
+            href="mailto:christian@darewise.com?cc=sebastien@darewise.com&subject=Issue%20with%20CLever">Support</a>
+        </li>
       </ul>
     </footer>
   </div>

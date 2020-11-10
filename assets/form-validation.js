@@ -194,7 +194,7 @@ function pickEasterEgg() {
     'Go ahead, make my day.',
     'Mein Führer! I can walk!',
     'A crash a day keeps the release away.',
-    'May the Force be with you.',
+    'May the Code Review be with you.',
     'You talking to me?',
     'I love the smell of broken builds in the morning.',
     'If you don\'t mind, it\'s time to milk the alpacas.',

@@ -6,15 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Tool to generate properly formatted changelist messages for your commits.">
   <meta name="author" content="Christian Chomiak and Bootstrap contributors">
-  <meta name="generator" content="Jekyll v4.1.1">
+  <meta name="generator" content="Hugo 0.82.0">
   <link rel="icon" type="image/png" href="favicon.png">
   <title>CLever</title>
 
-  <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/checkout/">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
 
   <!-- Bootstrap core CSS -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
@@ -37,156 +39,144 @@
       }
     }
   </style>
+
   <!-- Custom styles for this template -->
-  <link href="./assets/form-validation.css" rel="stylesheet">
+  <link href="./assets/css/form-validation.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
+
   <div class="container" onkeyup="updateResult()">
-    <div class="py-5 text-center">
-      <img class="d-block mx-auto mb-4" src="./assets/img/Darewise_logo.svg" alt="" width="192" height="64">
-      <h2><b>CL</b>ever</h2>
-      <p class="lead">A tool to generate properly formatted <b class="font-weight-bold">C</b>hange<b
-          class="font-weight-bold">L</b>ist
-        messages for your commits</p>
-    </div>
-
-    <div class="row">
-
-      <div class="col-md-12 order-md-1">
-        <h4 class="mb-3">Changelist Info</h4>
-        <form class="needs-validation" novalidate>
-
-          <div class="row">
-            <div class="col-md-3 mb-3">
-              <label for="visibility"><b class="font-weight-bold">Visibility</b></label>
-              <select class="custom-select d-block w-100" id="visibility" required
-                onchange="togglePublicMode(); updateResult()">
-                <!--
-                  We default to Private, since it's what most people will be using.
-                  If we ever want to default to none, add this:
-                    <option value="">Choose...</option>
-                -->
-                <option>Private</option>
-                <option>Public</option>
-              </select>
-              <div class="invalid-feedback">
-                Please provide a valid visibility.
-              </div>
-            </div>
-            <div class="col-md-3 mb-3">
-              <label for="type"><b class="font-weight-bold">Type</b></label>
-              <select class="custom-select d-block w-100" id="type" required onchange="updateResult()">
-                <option value="">Choose...</option>
-                <option>Addition</option>
-                <option>Improvement</option>
-                <option>Balancing</option>
-                <option>Deletion/Removal</option>
-                <option>Fix</option>
-                <option>Integration</option>
-                <option>Refactor</option>
-              </select>
-              <div class="invalid-feedback">
-                Please provide a valid type.
-              </div>
-            </div>
-            <div class="col-md-3 mb-3">
-              <label for="category"><b class="font-weight-bold">Category</b></label>
-              <select class="custom-select d-block w-100" id="category" required onchange="updateResult()">
-                <option value="">Choose...</option>
-                <option>Art</option>
-                <option>Audio</option>
-                <option>Character</option>
-                <option>Combat</option>
-                <option>Community</option>
-                <option>Construction</option>
-                <option>Contracts</option>
-                <option>DevOps</option>
-                <option>Economy</option>
-                <option>Expeditions</option>
-                <option>Lore</option>
-                <option>Missions</option>
-                <option>Progression</option>
-                <option>Resources</option>
-                <option>Tech</option>
-                <option>Tools</option>
-                <option>Tutorial</option>
-                <option>UI</option>
-                <option>Vehicles</option>
-                <option>Wildlife</option>
-                <option>World</option>
-              </select>
-              <div class="invalid-feedback">
-                Please select a valid category.
-              </div>
-            </div>
-            <div class="col-md-3 mb-3">
-              <label for="jira"><b class="font-weight-bold">JIRA Ticket </b><span
-                  class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="jira" placeholder="ex: COV-1234" contenteditable="true"
-                onpaste="handlePasteOnJira()">
-              <div class="invalid-feedback">
-                Invalid JIRA ticket ID.
-              </div>
-            </div>
-
-          </div>
-
-          <div class="mb-3">
-            <label for="main-description"><b class="font-weight-bold">Release Note</b></label>
-            <input type="text" class="form-control" id="main-description"
-              placeholder="Information relevant to the players" required>
-            <div class="invalid-feedback">
-              A release note is mandatory.
-            </div>
-          </div>
-
-          <div class="mb-3" id="optional-info-group">
-            <label for="optional-info"><b class="font-weight-bold">Additional Info </b><span
-                class="text-muted">(Optional)</span></label>
-            <textarea type="text" class="form-control" id="optional-info"
-              placeholder="Information relevant to the development team" rows="2"></textarea>
-          </div>
-
-          <hr class="mb-4">
-
-          <div class="mb-3">
-            <label for="preview"><b class="font-weight-bold">Changelist Preview</b></label>
-            <textarea type="text" class="form-control" id="preview"
-              placeholder="Fill the values above and then click down below!" readonly rows="4"></textarea>
-          </div>
-
-          <button class="btn btn-primary btn-lg btn-block" type="button" id="generator"
-            onclick="updateResult()">Validate & Copy to Clipboard <i class="fa fa-copy"></i></button>
-
-        </form>
+    <main>
+      <div class="py-5 text-center">
+        <h2><b>CL</b>ever</h2>
+        <p class="lead">A tool to generate properly formatted <b class="fw-bold">C</b>hange<b class="fw-bold">L</b>ist messages for your commits</p>
       </div>
-    </div>
 
-    <div class="py-2 text-center">
-      <br>
-      <p><span class="text-muted" id="easter-egg"></span></p>
-    </div>
+      <div class="row g-5">
 
-    <footer class="my-3 pt-3 text-muted text-center text-small">
-      <p class="mb-1">&copy; 2020 Darewise Entertainment</p>
-      <ul class="list-inline">
-        <li class="list-inline-item"><a
-            href="https://www.notion.so/darewise/Changelist-Syntax-4309a2dfe3994f8291239881197c8886"
-            target="_blank">About</a></li>
-        <li class="list-inline-item"><a
-            href="mailto:christian@darewise.com?cc=sebastien@darewise.com&subject=Issue%20with%20CLever">Support</a>
-        </li>
-      </ul>
-    </footer>
+        <div class="col-md-12 order-md-1">
+          <h4 class="mb-3">Changelist Info</h4>
+          <form class="needs-validation" novalidate>
+          
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label for="cl-visibility-label" class="form-label"><b class="font-weight-bold">Visibility</b></label>
+                <select class="form-select" id="cl-visibility-field" required onchange="togglePublicMode(); updateResult()">
+                  <!--
+                    We default to Private, since it's what most people will be using.
+                    If we ever want to default to none, add this:
+                      <option value="">Choose...</option>
+                  -->
+                  <option>Private</option>
+                  <option>Public</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please provide a valid visibility.
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="cl-type-label" class="form-label"><b class="font-weight-bold">Type</b></label>
+                <select class="form-select" id="cl-type-field" required onchange="updateResult()">
+                  <option value="">Choose...</option>
+                  <option>Addition</option>
+                  <option>Improvement</option>
+                  <option>Balancing</option>
+                  <option>Deletion/Removal</option>
+                  <option>Fix</option>
+                  <option>Integration</option>
+                  <option>Refactor</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please provide a valid type.
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="cl-category-label" class="form-label"><b class="font-weight-bold">Category</b></label>
+                <select class="form-select" id="cl-category-field" required onchange="updateResult()">
+                  <option value="">Choose...</option>
+                  <option>Art</option>
+                  <option>Audio</option>
+                  <option>Character</option>
+                  <option>Combat</option>
+                  <option>Community</option>
+                  <option>Construction</option>
+                  <option>Contracts</option>
+                  <option>DevOps</option>
+                  <option>Economy</option>
+                  <option>Expeditions</option>
+                  <option>Lore</option>
+                  <option>Missions</option>
+                  <option>Progression</option>
+                  <option>Resources</option>
+                  <option>Tech</option>
+                  <option>Tools</option>
+                  <option>Tutorial</option>
+                  <option>UI</option>
+                  <option>Vehicles</option>
+                  <option>Wildlife</option>
+                  <option>World</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please provide a valid category.
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="cl-jira-label" class="form-label">
+                  <b class="font-weight-bold">JIRA Ticket </b><span class="text-muted">(Optional)</span>
+                </label>
+                <input type="text" class="form-control" id="cl-jira-field" placeholder="ex: COV-1234" value="" contenteditable="true" onpaste="handlePasteOnJira()">
+                <div class="invalid-feedback">
+                  Invalid JIRA ticket ID.
+                </div>
+              </div>
+              <div class="col-mb-3">
+                <label for="cl-main-description-label"><b class="font-weight-bold">Release Note</b></label>
+                <input type="text" class="form-control" id="cl-main-description-field" placeholder="Information relevant to the players"
+                  required>
+                <div class="invalid-feedback">
+                  A release note is mandatory.
+                </div>
+              </div>
+              
+              <div class="col-mb-3" id="optional-info-group">
+                <label for="cl-optional-description-label"><b class="font-weight-bold">Additional Info </b><span
+                    class="text-muted">(Optional)</span></label>
+                <textarea type="text" class="form-control" id="cl-optional-description-field"
+                  placeholder="Information relevant to the development team" rows="2"></textarea>
+              </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="mb-3">
+              <label for="cl-preview-label"><b class="font-weight-bold">Preview</b></label>
+              <textarea type="text" class="form-control" id="cl-preview-field" placeholder="Fill the values above and then click down below!"
+                readonly rows="4"></textarea>
+            </div>
+
+            <button class="w-100 btn btn-primary btn-lg" type="button" id="cl-generator-button" onclick="updateResult()">
+              Validate & Copy to Clipboard <i class="fa fa-copy"></i>
+            </button>
+
+          </form>
+        </div>
+      </div>
+      <div class="py-2 text-center">
+        <br>
+        <p><span class="text-muted" id="cl-easter-egg"></span></p>
+      </div>
+    </main>
+
   </div>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="./assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-  <script src="./assets/form-validation.js"></script>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+    integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+  <script src="./assets/js/form-validation.js"></script>
 </body>
 
 </html>

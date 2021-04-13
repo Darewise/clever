@@ -1,51 +1,51 @@
-// Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
   'use strict'
 
-  window.addEventListener('load', function () {
-    pickEasterEgg();
-    presetDropdownFields();
-    togglePublicMode();
+  pickEasterEgg();
+  prefillFromCookies();
+  togglePublicMode();
 
-    // Calling this here will allow us to prefill
-    // the JIRA field at page load (if possible).
-    handlePasteOnJira();
+  // Calling this here will allow us to prefill
+  // the JIRA field at page load (if possible).
+  handlePasteOnJira();
 
-    $('#generator').on("click", function (e) {
-      //e.preventDefault();
+  $('#cl-generator-button').on("click", function (e) {
+    //e.preventDefault();
 
-      if (checkRegex()) {
-        navigator.clipboard.writeText($('#preview').val());
-      }
+    if (checkRegex()) {
+      navigator.clipboard.writeText($('#cl-preview-field').val());
+    }
 
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
 
-      // Loop over them and prevent submission
-      Array.prototype.filter.call(forms, function (form) {
-        if (form.checkValidity() === false) {
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        if (!form.checkValidity()) {
           event.preventDefault()
           event.stopPropagation()
         }
+
         form.classList.add('was-validated')
       });
-    });
-  }, false)
-}())
+  });
+})()
 
-function presetDropdownFields() {
-  var typeFieldCookie = getCookie('type');
+
+function prefillFromCookies() {
+  var typeFieldCookie = getCookie('cl_type');
   if (typeFieldCookie) {
-    $('#type').val(typeFieldCookie);
+    $('#cl-type-field').val(typeFieldCookie);
   }
 
-  var categoryFieldCookie = getCookie('category');
+  var categoryFieldCookie = getCookie('cl_category');
   if (categoryFieldCookie) {
-    $('#category').val(categoryFieldCookie);
+    $('#cl-category-field').val(categoryFieldCookie);
   }
 
-  $('#type').trigger('change');
-  $('#category').trigger('change');
+  $('#cl-type-field').trigger('change');
+  $('#cl-category-field').trigger('change');
 }
 
 function setCookie(cname, cvalue, expirationInDays) {
@@ -72,16 +72,16 @@ function getCookie(cname) {
 }
 
 function isPublicChangelist() {
-  return $('#visibility').val().toLowerCase() === "public";
+  return $('#cl-visibility-field').val().toLowerCase() === "public";
 }
 
 function togglePublicMode() {
   if (isPublicChangelist()) {
-    $('#main-description').attr('placeholder', 'Information relevant to the public');
-    $('#optional-info').attr('placeholder', 'Information relevant to the development team');
+    $('#cl-main-description-field').attr('placeholder', 'Information relevant to the public');
+    $('#cl-optional-description-field').attr('placeholder', 'Information relevant to the development team');
   } else {
-    $('#main-description').attr('placeholder', 'Information relevant to the development team');
-    $('#optional-info').attr('placeholder', 'More detailed information');
+    $('#cl-main-description-field').attr('placeholder', 'Information relevant to the development team');
+    $('#cl-optional-description-field').attr('placeholder', 'More detailed information');
   }
 }
 
@@ -100,7 +100,9 @@ function handlePasteOnJira() {
         // The first one will contain "http" or "https".
         // The second one will contain the JIRA domain.
         // The third one will contain the string we're looking for.
-        $('#jira').val(jiraSplit[2]);
+        $('#cl-jira-field').val(jiraSplit[2]);
+
+        updateResult();
       } else {
         console.log("Failed to properly match the regex for the JIRA field. Groups are: " + jiraSplit);
       }
@@ -111,15 +113,15 @@ function handlePasteOnJira() {
 function updateResult() {
   const cookiesLifetimeInDays = 7;
 
-  var clType = $('#type').val();
-  document.cookie = setCookie("type", clType, cookiesLifetimeInDays);
+  var clType = $('#cl-type-field').val();
+  document.cookie = setCookie("cl_type", clType, cookiesLifetimeInDays);
 
   var text = '';
   if (clType) {
     text += clType.substring(0, 3).toUpperCase() + ' ';
   }
 
-  var jiraId = $('#jira').val();
+  var jiraId = $('#cl-jira-field').val();
   if (jiraId) {
     const jiraRegex = /([A-Z]{3,5}-[0-9]+)/g;
     var processedJira = jiraId.match(jiraRegex);
@@ -136,13 +138,13 @@ function updateResult() {
     text += '!X';
   }
 
-  var category = $('#category').val();
-  document.cookie = setCookie("category", category, cookiesLifetimeInDays);
+  var category = $('#cl-category-field').val();
+  document.cookie = setCookie("cl_category", category, cookiesLifetimeInDays);
   if (category) {
     text += '[' + category + ']';
   }
 
-  var releaseNote = $('#main-description').val();
+  var releaseNote = $('#cl-main-description-field').val();
 
   if (isPublic) {
     text += '[' + releaseNote + ']\n\n';
@@ -150,19 +152,19 @@ function updateResult() {
     text += ' ' + releaseNote + '\n\n';
   }
 
-  var optionalInfo = $('#optional-info').val();
+  var optionalInfo = $('#cl-optional-description-field').val();
   if (optionalInfo) {
     text += optionalInfo;
   }
 
   // The changelog generator doesn't support Unicode characters.
   // Also, remove all unnecessary spaces and end of lines.
-  $('#preview').val(text.replace(/[^\x00-\x7F]/g, "").trim());
+  $('#cl-preview-field').val(text.replace(/[^\x00-\x7F]/g, "").trim());
 }
 
 function checkRegex() {
   const regex = /([A-Z]{3}) (([A-Z]{3,5}-[0-9]+) )*(!P\[(.+?)\]\[.+\]|!X\[(.+?)\])/g;
-  return $('#preview').val().match(regex);
+  return $('#cl-preview-field').val().match(regex);
 }
 
 function pickEasterEgg() {
@@ -216,5 +218,5 @@ function pickEasterEgg() {
   ];
 
   const random = Math.floor(Math.random() * quotes.length);
-  $('#easter-egg').append('<p> « ' + quotes[random] + ' »</p>');
+  $('#cl-easter-egg').append('<p> « ' + quotes[random] + ' »</p>');
 }

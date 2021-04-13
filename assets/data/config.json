@@ -1,12 +1,42 @@
 {
-    "about_url": "https://duckduckgo.com/",
+    "about_url": "https://www.notion.so/darewise/Changelist-Syntax-4309a2dfe3994f8291239881197c8886",
     "contact": {
-        "to": "fake1@email.com",
-        "cc": "fake2@email.com",
+        "to": "christian@darewise.com",
+        "cc": "sebastien@darewise.com",
         "subject": "Feedback%20about%20CLever"
     },
-    "types": [],
-    "categories": [],
+    "types": [
+        "Addition",
+        "Improvement",
+        "Balancing",
+        "Deletion/Removal",
+        "Fix",
+        "Integration",
+        "Refactor"
+    ],
+    "categories": [
+        "Art",
+        "Audio",
+        "Character",
+        "Combat",
+        "Community",
+        "Construction",
+        "Contracts",
+        "DevOps",
+        "Economy",
+        "Expeditions",
+        "Lore",
+        "Missions",
+        "Progression",
+        "Resources",
+        "Tech",
+        "Tools",
+        "Tutorial",
+        "UI",
+        "Vehicles",
+        "Wildlife",
+        "World"
+    ],
     "quotes": [
         "Game dev... game dev never changes.",
         "The Build is a lie.",

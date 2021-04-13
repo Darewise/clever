@@ -5,50 +5,30 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Tool to generate properly formatted changelist messages for your commits.">
-  <meta name="author" content="Christian Chomiak and Bootstrap contributors">
   <meta name="generator" content="Hugo 0.82.0">
   <link rel="icon" type="image/png" href="favicon.png">
   <title>CLever</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
 
-  <!-- Bootstrap core CSS -->
+  <!-- CSS -->
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    body {
-      font-family: 'Roboto', sans-serif;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
-
-  <!-- Custom styles for this template -->
-  <link href="./assets/css/form-validation.css" rel="stylesheet">
+  <link href="./assets/css/clever.css" rel="stylesheet"/>
+  <link href="./assets/css/form-validation.css" rel="stylesheet"/>
 </head>
 
 <body class="bg-light">
 
-  <div class="container" onkeyup="updateResult()">
+  <div class="container" onkeyup="updatePreview()">
     <main>
       <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="./assets/img/logo.svg" alt="" width="192" height="64">
         <h2><b>CL</b>ever</h2>
         <p class="lead">A tool to generate properly formatted <b class="fw-bold">C</b>hange<b class="fw-bold">L</b>ist messages for your commits</p>
       </div>
@@ -62,7 +42,7 @@
             <div class="row g-3">
               <div class="col-md-3">
                 <label for="cl-visibility-label" class="form-label"><b class="font-weight-bold">Visibility</b></label>
-                <select class="form-select" id="cl-visibility-field" required onchange="togglePublicMode(); updateResult()">
+                <select class="form-select" id="cl-visibility-field" required onchange="togglePublicMode(); updatePreview()">
                   <!--
                     We default to Private, since it's what most people will be using.
                     If we ever want to default to none, add this:
@@ -77,15 +57,8 @@
               </div>
               <div class="col-md-3">
                 <label for="cl-type-label" class="form-label"><b class="font-weight-bold">Type</b></label>
-                <select class="form-select" id="cl-type-field" required onchange="updateResult()">
+                <select class="form-select" id="cl-type-field" required onchange="updatePreview()">
                   <option value="">Choose...</option>
-                  <option>Addition</option>
-                  <option>Improvement</option>
-                  <option>Balancing</option>
-                  <option>Deletion/Removal</option>
-                  <option>Fix</option>
-                  <option>Integration</option>
-                  <option>Refactor</option>
                 </select>
                 <div class="invalid-feedback">
                   Please provide a valid type.
@@ -93,29 +66,8 @@
               </div>
               <div class="col-md-3">
                 <label for="cl-category-label" class="form-label"><b class="font-weight-bold">Category</b></label>
-                <select class="form-select" id="cl-category-field" required onchange="updateResult()">
+                <select class="form-select" id="cl-category-field" required onchange="updatePreview()">
                   <option value="">Choose...</option>
-                  <option>Art</option>
-                  <option>Audio</option>
-                  <option>Character</option>
-                  <option>Combat</option>
-                  <option>Community</option>
-                  <option>Construction</option>
-                  <option>Contracts</option>
-                  <option>DevOps</option>
-                  <option>Economy</option>
-                  <option>Expeditions</option>
-                  <option>Lore</option>
-                  <option>Missions</option>
-                  <option>Progression</option>
-                  <option>Resources</option>
-                  <option>Tech</option>
-                  <option>Tools</option>
-                  <option>Tutorial</option>
-                  <option>UI</option>
-                  <option>Vehicles</option>
-                  <option>Wildlife</option>
-                  <option>World</option>
                 </select>
                 <div class="invalid-feedback">
                   Please provide a valid category.
@@ -155,7 +107,7 @@
                 readonly rows="4"></textarea>
             </div>
 
-            <button class="w-100 btn btn-primary btn-lg" type="button" id="cl-generator-button" onclick="updateResult()">
+            <button class="w-100 btn btn-primary btn-lg" type="button" id="cl-generator-button" onclick="updatePreview()">
               Validate & Copy to Clipboard <i class="fa fa-copy"></i>
             </button>
 
@@ -166,16 +118,30 @@
         <br>
         <p><span class="text-muted" id="cl-easter-egg"></span></p>
       </div>
+
+      <footer class="my-3 pt-3 text-muted text-center text-small">
+        <ul class="list-inline">
+          <li class="list-inline-item" id="clever-about-field">
+            <a id="clever-about-href" href="#" target="_blank" class="fw-bold">About</a>
+          </li>
+          <li class="list-inline-item" id="clever-contact-field">
+            <a id="clever-contact-href" target="_blank" href="#" class="fw-bold">Support</a>
+          </li>
+        </ul>
+      </footer>
+
     </main>
 
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
-    integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 
+  <script src="./assets/js/utils.js"></script>
+  <script src="./assets/js/clever.js"></script>
   <script src="./assets/js/form-validation.js"></script>
 </body>
 

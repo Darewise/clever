@@ -6,7 +6,8 @@
   $('#cl-generator-button').on("click", function (e) {
     //e.preventDefault();
 
-    if (checkRegex()) {
+    const regex = /([A-Z]{3}) (([A-Z]{3,5}-[0-9]+) )*(!P\[(.+?)\]\[.+\]|!X\[(.+?)\])/g;
+    if ($('#cl-preview-field').val().match(regex)) {
       navigator.clipboard.writeText($('#cl-preview-field').val());
     }
 

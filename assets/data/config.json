@@ -5,6 +5,7 @@
         "cc": "fake2@email.com",
         "subject": "Feedback%20about%20CLever"
     },
+    "allow_unicode": true,
     "format": {
         "public": "${clType.substring(0, 3).toUpperCase()} ${clTickets}!P[${clCategory}][${clReleaseNote}]\n\n${clOptionalInfo}",
         "private": "${clType.substring(0, 3).toUpperCase()} ${clTickets}!X[${clCategory}] ${clReleaseNote}\n\n${clOptionalInfo}"
@@ -13,8 +14,8 @@
         "regex": "([A-Z]{3,5}-[0-9]+)",
         "url_regex": "(https|http)\\:\\/\\/(.+)\\.atlassian\\.net\\/browse\\/([A-Z]{3,5}-[0-9]+)(.*)"
     },
-    "types": [],
-    "categories": [],
+    "types": [ "Add", "Delete", "Fix" ],
+    "categories": [ "Code" ],
     "quotes": [
         "Game dev... game dev never changes.",
         "The Build is a lie.",

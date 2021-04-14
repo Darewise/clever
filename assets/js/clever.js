@@ -4,10 +4,6 @@ function initClever() {
     loadConfig();
 
     togglePublicMode();
-
-    // Calling this here will allow us to prefill
-    // the JIRA field at page load (if possible).
-    handlePasteOnJira();
 }
 
 function loadConfig() {
@@ -60,6 +56,10 @@ function loadConfig() {
             const random = Math.floor(Math.random() * quotesObj.length);
             $('#cl-easter-egg').append('<p> « ' + quotesObj[random] + ' »</p>');
         }
+        
+        // Calling this here will allow us to prefill
+        // the ticket field at page load (if possible).
+        handlePasteOnTicket();
     });
 }
 
@@ -98,26 +98,26 @@ function togglePublicMode() {
     $('#cl-optional-description-field').attr('placeholder', optionalDescription);
 }
 
-function handlePasteOnJira() {
+function handlePasteOnTicket() {
     navigator.clipboard.readText().then(
         clipText => {
-            const urlRegex = /(https|http)\:\/\/(.+)\.atlassian\.net\/browse\/([A-Z]{3,5}-[0-9]+)(.*)/;
+            const urlRegex = "/" + configJson["ticket"]["url_regex"] + "/";
 
-            var jiraSplit = clipText.split(urlRegex);
+            var ticketSplit = clipText.split(eval(urlRegex));
 
             // Remove empty strings
-            jiraSplit = jiraSplit.filter(item => item);
+            ticketSplit = ticketSplit.filter(item => item);
 
-            if (jiraSplit.length > 2) {
+            if (ticketSplit.length > 2) {
                 // Given the regex we defined before, we'll end up with at least three groups.
                 // The first one will contain "http" or "https".
-                // The second one will contain the JIRA domain.
+                // The second one will contain the ticket domain.
                 // The third one will contain the string we're looking for.
-                $('#cl-jira-field').val(jiraSplit[2]);
+                $('#cl-ticket-field').val(ticketSplit[2]);
 
                 updatePreview();
             } else {
-                console.log("Failed to properly match the regex for the JIRA field. Groups are: " + jiraSplit);
+                console.log("Failed to properly match the regex for the ticket field. Groups are: " + ticketSplit);
             }
         }
     );
@@ -142,16 +142,14 @@ function updatePreview() {
     document.cookie = setCookie("cl_category", clCategory, cookiesLifetimeInDays);
 
     let clTickets = "";
-    const jiraIds = $('#cl-jira-field').val();
-    if (jiraIds) {
-        const jiraRegex = /([A-Z]{3,5}-[0-9]+)/g;
-        var processedJira = jiraIds.match(jiraRegex);
-        if (processedJira) {
-            var ticketsList = "";
-            for (i = 0; i < processedJira.length; i++) {
-                ticketsList += processedJira[i] + ' ';
+    const allTickesField = $('#cl-ticket-field').val();
+    if (allTickesField) {
+        const tickeRegex = "/" + configJson["ticket"]["regex"] + "/g";
+        var processedTickets = allTickesField.match(eval(tickeRegex));
+        if (processedTickets) {
+            for (i = 0; i < processedTickets.length; i++) {
+                clTickets += processedTickets[i] + ' ';
             }
-            clTickets = ticketsList;
         }
     }
 

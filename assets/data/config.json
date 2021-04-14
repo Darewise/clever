@@ -5,6 +5,10 @@
         "cc": "fake2@email.com",
         "subject": "Feedback%20about%20CLever"
     },
+    "format": {
+        "public": "${clType.substring(0, 3).toUpperCase()} ${clTickets}!P[${clCategory}][${clReleaseNote}]\n\n${clOptionalInfo}",
+        "private": "${clType.substring(0, 3).toUpperCase()} ${clTickets}!X[${clCategory}] ${clReleaseNote}\n\n${clOptionalInfo}"
+    },
     "types": [],
     "categories": [],
     "quotes": [

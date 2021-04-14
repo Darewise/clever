@@ -1,3 +1,5 @@
+var configJson = null;
+
 function initClever() {
     loadConfig();
 
@@ -10,6 +12,8 @@ function initClever() {
 
 function loadConfig() {
     $.getJSON("./assets/data/config.json", function (data) {
+        configJson = data;
+
         // Load the types of changelist
         var types_field = document.getElementById("cl-type-field");
         data["types"].forEach(function (cl_type) {
@@ -55,8 +59,6 @@ function loadConfig() {
         if (quotesObj && quotesObj.length > 0) {
             const random = Math.floor(Math.random() * quotesObj.length);
             $('#cl-easter-egg').append('<p> « ' + quotesObj[random] + ' »</p>');
-        } else {
-            //$('#cl-easter-egg').append('<p> « :( »</p>');
         }
     });
 }
@@ -81,13 +83,19 @@ function isPublicChangelist() {
 }
 
 function togglePublicMode() {
+    let mainDescription;
+    let optionalDescription;
+
     if (isPublicChangelist()) {
-        $('#cl-main-description-field').attr('placeholder', 'Information relevant to the public');
-        $('#cl-optional-description-field').attr('placeholder', 'Information relevant to the development team');
+        mainDescription = 'Information relevant to the public';
+        optionalDescription = 'Information relevant to the development team';
     } else {
-        $('#cl-main-description-field').attr('placeholder', 'Information relevant to the development team');
-        $('#cl-optional-description-field').attr('placeholder', 'More detailed information');
+        mainDescription = 'Information relevant to the development team';
+        optionalDescription = 'More detailed information';
     }
+
+    $('#cl-main-description-field').attr('placeholder', mainDescription);
+    $('#cl-optional-description-field').attr('placeholder', optionalDescription);
 }
 
 function handlePasteOnJira() {
@@ -116,58 +124,44 @@ function handlePasteOnJira() {
 }
 
 function updatePreview() {
-    const cookiesLifetimeInDays = 7;
-
-    var clType = $('#cl-type-field').val();
-    document.cookie = setCookie("cl_type", clType, cookiesLifetimeInDays);
-
-    var text = '';
-    if (clType) {
-        text += clType.substring(0, 3).toUpperCase() + ' ';
+    if (!configJson) {
+        console.log("There's no valid config JSON");
+        return;
     }
 
-    var jiraId = $('#cl-jira-field').val();
-    if (jiraId) {
+    const cookiesLifetimeInDays = 7;
+
+    var template = configJson["format"][isPublicChangelist() ? "public" : "private"];
+
+    const clVisibility = $('#cl-visibility-field').val();
+
+    const clType = $('#cl-type-field').val();
+    document.cookie = setCookie("cl_type", clType, cookiesLifetimeInDays);
+
+    const clCategory = $('#cl-category-field').val();
+    document.cookie = setCookie("cl_category", clCategory, cookiesLifetimeInDays);
+
+    let clTickets = "";
+    const jiraIds = $('#cl-jira-field').val();
+    if (jiraIds) {
         const jiraRegex = /([A-Z]{3,5}-[0-9]+)/g;
-        var processedJira = jiraId.match(jiraRegex);
-        for (const group in processedJira) {
-            text += processedJira[group] + ' ';
+        var processedJira = jiraIds.match(jiraRegex);
+        if (processedJira) {
+            var ticketsList = "";
+            for (i = 0; i < processedJira.length; i++) {
+                ticketsList += processedJira[i] + ' ';
+            }
+            clTickets = ticketsList;
         }
     }
 
-    var isPublic = isPublicChangelist();
+    const clReleaseNote = $('#cl-main-description-field').val();
 
-    if (isPublic) {
-        text += '!P';
-    } else {
-        text += '!X';
-    }
-
-    var category = $('#cl-category-field').val();
-    document.cookie = setCookie("cl_category", category, cookiesLifetimeInDays);
-    if (category) {
-        text += '[' + category + ']';
-    }
-
-    var releaseNote = $('#cl-main-description-field').val();
-
-    if (isPublic) {
-        text += '[' + releaseNote + ']\n\n';
-    } else {
-        text += ' ' + releaseNote + '\n\n';
-    }
-
-    var optionalInfo = $('#cl-optional-description-field').val();
-    if (optionalInfo) {
-        text += optionalInfo;
-    }
+    const clOptionalInfo = $('#cl-optional-description-field').val();
 
     // The changelog generator doesn't support Unicode characters.
     // Also, remove all unnecessary spaces and end of lines.
-    $('#cl-preview-field').val(text.replace(/[^\x00-\x7F]/g, "").trim());
-}
+    const preview = eval("`" + template + "`").replace(/[^\x00-\x7F]/g, "").trim();
 
-function checkRegex() {
-    const regex = /([A-Z]{3}) (([A-Z]{3,5}-[0-9]+) )*(!P\[(.+?)\]\[.+\]|!X\[(.+?)\])/g;
-    return $('#cl-preview-field').val().match(regex);
+    $('#cl-preview-field').val(preview);
 }

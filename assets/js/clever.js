@@ -157,9 +157,12 @@ function updatePreview() {
 
     const clOptionalInfo = $('#cl-optional-description-field').val();
 
-    // The changelog generator doesn't support Unicode characters.
-    // Also, remove all unnecessary spaces and end of lines.
-    const preview = eval("`" + template + "`").replace(/[^\x00-\x7F]/g, "").trim();
+    // Fill in the template and remove all unnecessary spaces and end of lines.
+    let preview = eval("`" + template + "`").trim();
+
+    if (!configJson["allow_unicode"]) {
+        preview = preview.replace(/[^\x00-\x7F]/g, "")
+    }
 
     $('#cl-preview-field').val(preview);
 }

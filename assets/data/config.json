@@ -9,6 +9,10 @@
         "public": "${clType.substring(0, 3).toUpperCase()} ${clTickets}!P[${clCategory}][${clReleaseNote}]\n\n${clOptionalInfo}",
         "private": "${clType.substring(0, 3).toUpperCase()} ${clTickets}!X[${clCategory}] ${clReleaseNote}\n\n${clOptionalInfo}"
     },
+    "ticket": {
+        "regex": "([A-Z]{3,5}-[0-9]+)",
+        "url_regex": "(https|http)\\:\\/\\/(.+)\\.atlassian\\.net\\/browse\\/([A-Z]{3,5}-[0-9]+)(.*)"
+    },
     "types": [],
     "categories": [],
     "quotes": [

@@ -12,7 +12,7 @@ function loadConfig() {
 
         // Load the types of changelist
         var types_field = document.getElementById("cl-type-field");
-        data["types"].forEach(function (cl_type) {
+        data.types.forEach(function (cl_type) {
             var option = document.createElement("option");
             option.text = cl_type;
             types_field.add(option);
@@ -20,30 +20,27 @@ function loadConfig() {
 
         // Load the project's categories
         var categories_field = document.getElementById("cl-category-field");
-        data["categories"].forEach(function (cl_category) {
+        data.categories.forEach(function (cl_category) {
             var option = document.createElement("option");
             option.text = cl_category;
             categories_field.add(option);
         });
 
         //Load 'About' info
-        if (data["about_url"]) {
-            document.getElementById("clever-about-href").href = data["about_url"];
-        }
+        document.getElementById("clever-about-href").href = data.about_url || "#";
 
         // Load 'Contact' info
-        var contactObj = data["contact"];
-        if (contactObj) {
+        if (data.contact) {
             var contactUrl = "mailto:";
-            if (contactObj["to"]) {
-                contactUrl += contactObj["to"];
+            if (data.contact.to) {
+                contactUrl += data.contact.to;
             }
             contactUrl = contactUrl + "?";
-            if (contactObj["cc"]) {
-                contactUrl += "cc=" + contactObj["cc"];
+            if (data.contact.cc) {
+                contactUrl += "cc=" + data.contact.cc;
             }
-            if (contactObj["subject"]) {
-                contactUrl += "&subject=" + contactObj["subject"];
+            if (data.contact.subject) {
+                contactUrl += "&subject=" + data.contact.subject;
             }
 
             document.getElementById("clever-contact-href").href = contactUrl;
@@ -51,7 +48,7 @@ function loadConfig() {
 
         prefillFromCookies();
         
-        var quotesObj = data["quotes"];
+        var quotesObj = data.quotes;
         if (quotesObj && quotesObj.length > 0) {
             const random = Math.floor(Math.random() * quotesObj.length);
             $('#cl-easter-egg').append('<p> « ' + quotesObj[random] + ' »</p>');
@@ -101,7 +98,7 @@ function togglePublicMode() {
 function handlePasteOnTicket() {
     navigator.clipboard.readText().then(
         clipText => {
-            const urlRegex = "/" + configJson["ticket"]["url_regex"] + "/";
+            const urlRegex = "/" + configJson.ticket.url_regex + "/";
 
             var ticketSplit = clipText.split(eval(urlRegex));
 
@@ -131,7 +128,7 @@ function updatePreview() {
 
     const cookiesLifetimeInDays = 7;
 
-    var template = configJson["format"][isPublicChangelist() ? "public" : "private"];
+    var template = configJson.format[isPublicChangelist() ? "public" : "private"];
 
     const clVisibility = $('#cl-visibility-field').val();
 
@@ -144,7 +141,7 @@ function updatePreview() {
     let clTickets = "";
     const allTickesField = $('#cl-ticket-field').val();
     if (allTickesField) {
-        const tickeRegex = "/" + configJson["ticket"]["regex"] + "/g";
+        const tickeRegex = "/" + configJson.ticket.regex + "/g";
         var processedTickets = allTickesField.match(eval(tickeRegex));
         if (processedTickets) {
             for (i = 0; i < processedTickets.length; i++) {
@@ -160,7 +157,7 @@ function updatePreview() {
     // Fill in the template and remove all unnecessary spaces and end of lines.
     let preview = eval("`" + template + "`").trim();
 
-    if (!configJson["allow_unicode"]) {
+    if (!configJson.allow_unicode) {
         preview = preview.replace(/[^\x00-\x7F]/g, "")
     }
 
